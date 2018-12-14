@@ -1,0 +1,15 @@
+{
+    "token_secret": "logan_is_not_dead",
+    "token_expirey_time": "14 days",
+    "cors": {
+        "allowedOrigins": "*"
+    },
+    "mongo": {
+        "user": "hulk",
+        "password": "reverse",
+        "host": "localhost",
+        "port": "27017",
+        "database": "",
+        "params": ""
+    }
+}
