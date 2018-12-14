@@ -3,7 +3,6 @@ var ts = require("gulp-typescript");
 var tsProject = ts.createProject("tsconfig.json");
 const runSequence = require('gulp4-run-sequence');
 var dist = "dist";
-var src = "./"
 
 gulp.task("default", function() {
     return tsProject.src()
@@ -14,7 +13,7 @@ gulp.task("default", function() {
 
 gulp.task("bundle", function() {
     return gulp.src(['api/swagger/**/*', 'config/**/*'], {
-        base: src
+        base: "./"
     }).pipe(gulp.dest(dist));
 });
 
