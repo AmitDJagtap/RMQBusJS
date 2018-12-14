@@ -1,5 +1,3 @@
-import Promise from 'bluebird';
-
 export interface Broker {
     publish(topic:string, msg:any): Promise<any>;
     subscribe(topic:string, callback:any): Promise<any>;
