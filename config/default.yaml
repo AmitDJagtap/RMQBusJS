@@ -7,8 +7,6 @@ swagger:
   defaultPipe: null
   swaggerControllerPipe: swagger_controllers  # defines the standard processing pipe for controllers
 
-  # values defined in the bagpipes key are the bagpipes pipes and fittings definitions
-  # (see https://github.com/apigee-127/bagpipes)
   bagpipes:
 
     _router:
