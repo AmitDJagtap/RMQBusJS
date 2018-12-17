@@ -2,8 +2,8 @@
 import nconf from "nconf";
 import path from "path";
 import express from "express";
-import swaggerExpress from "swagger-express-mw";
 var SwaggerExpress = require('swagger-express-mw');
+import LocalBroker from "./api/helpers/LocalBroker"
 let app = express();
 
 
@@ -28,6 +28,7 @@ nconf.load((err: Error) => {
         if (swaggerExpress.runner.swagger.paths['/hello']) {
           console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
         }
+        new LocalBroker().init();
       });
 
 });

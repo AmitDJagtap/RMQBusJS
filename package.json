@@ -8,12 +8,14 @@
     "license": "",
     "main": "app.js",
     "dependencies": {
-        "swagger-express-mw": "^0.1.0",
+        "amqplib": "^0.5.3",
         "bluebird": "^3.5.3",
         "express": "^4.16.4",
-        "nconf": "^0.10.0"
+        "nconf": "^0.10.0",
+        "swagger-express-mw": "^0.1.0"
     },
     "devDependencies": {
+        "@types/amqplib": "^0.5.9",
         "@types/bluebird": "^3.5.25",
         "@types/express": "^4.16.0",
         "@types/nconf": "0.0.37",

@@ -10,6 +10,10 @@ gulp.task("default", function() {
         .js.pipe(gulp.dest(dist));
 });
 
+gulp.task('clean', function() {
+    return gulp.src(dist, { read: false })
+        .pipe(clean({ force: true }));
+});
 
 gulp.task("bundle", function() {
     return gulp.src(['api/swagger/**/*', 'config/**/*'], {
@@ -23,4 +27,4 @@ gulp.task("compile", function() {
         .js.pipe(gulp.dest(dist));
 });
 
-gulp.task('build', gulp.series('compile', 'bundle'));
+gulp.task('build', gulp.series('clean', 'compile', 'bundle'));
