@@ -3,7 +3,7 @@ import nconf from "nconf";
 import path from "path";
 import express from "express";
 var SwaggerExpress = require('swagger-express-mw');
-import LocalBroker from "./api/helpers/LocalBroker"
+import   RMQBroker  from "./api/helpers/RMQBroker";
 let app = express();
 
 
@@ -16,6 +16,8 @@ nconf.argv()
 
 nconf.load((err: Error) => {
 
+  new RMQBroker().init().then(()=>{
+
     SwaggerExpress.create(config, function(err:any, swaggerExpress:any) {
         if (err) { throw err; }
       
@@ -27,11 +29,8 @@ nconf.load((err: Error) => {
       
         if (swaggerExpress.runner.swagger.paths['/ping']) {
           console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
-
-          new LocalBroker().init().then(()=>{
-            console.log("channel created. data sent.");
-          });
         }
       });
-
+      
+    });
 });
