@@ -25,10 +25,13 @@ nconf.load((err: Error) => {
         var port = process.env.PORT || 10010;
         app.listen(port);
       
-        if (swaggerExpress.runner.swagger.paths['/hello']) {
+        if (swaggerExpress.runner.swagger.paths['/ping']) {
           console.log('try this:\ncurl http://127.0.0.1:' + port + '/hello?name=Scott');
+
+          new LocalBroker().init().then(()=>{
+            console.log("channel created. data sent.");
+          });
         }
-        new LocalBroker().init();
       });
 
 });
