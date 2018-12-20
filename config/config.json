@@ -11,5 +11,8 @@
         "port": "27017",
         "database": "",
         "params": ""
+    },
+    "rabbitmq": {
+        "url": "amqp://ayopop:sRwH55P6F4@13.232.192.49:30056"
     }
 }

@@ -3,15 +3,15 @@ import amqp, { Replies } from 'amqplib';
 import {Connection,Channel} from 'amqplib';
 
 
-
 export default class RMQBroker implements Broker {
 
     private static _conn : Connection;
     private static _functionsDir = __dirname + '/api/services/*.js';
 
-    init():Promise<any>{
+    init(rmqConfig:any):Promise<any>{
         return new Promise<any>((res,rej)=>{
-            amqp.connect('amqp://ayopop:sRwH55P6F4@13.232.192.49:30056').then((connectedCon: Connection)=> { 
+           
+            amqp.connect(rmqConfig.url).then((connectedCon: Connection)=> { 
                 RMQBroker._conn = connectedCon;
                 res();
             });
@@ -30,11 +30,9 @@ export default class RMQBroker implements Broker {
         return new Promise<any>((res,rej)=>{
             console.log("RPC Invoked.");    
             RMQBroker._conn.createChannel().then((ch:Channel)=>{
-                //
-
-               ch.assertQueue('',{exclusive:true}).then((q:Replies.AssertQueue)=>{
-                var corr = generateUuid();
-                console.log(' Sending Data -', message);
+                let buf = Buffer.from(JSON.stringify(message));
+                ch.assertQueue('',{exclusive:true}).then((q:Replies.AssertQueue)=>{
+                let corr = generateUuid();
 
                 ch.consume(q.queue, function(msg) {
                   if (msg.properties.correlationId == corr) {
@@ -43,7 +41,7 @@ export default class RMQBroker implements Broker {
                   }
                 }, {noAck: true});
           
-                ch.sendToQueue(topic,new Buffer(message.toString()),{ correlationId: corr, replyTo: q.queue });
+                ch.sendToQueue(topic,buf,{ correlationId: corr, replyTo: q.queue });
                });
 
             });
