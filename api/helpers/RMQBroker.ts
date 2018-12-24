@@ -1,6 +1,7 @@
 import { Broker } from '../interfaces/Broker';
 import amqp, { Replies } from 'amqplib';
 import {Connection,Channel} from 'amqplib';
+var randomstring = require("randomstring");
 
 
 export default class RMQBroker implements Broker {
@@ -15,6 +16,7 @@ export default class RMQBroker implements Broker {
             amqp.connect(rmqConfig.url).then((connectedCon: Connection)=> { 
                 RMQBroker._conn = connectedCon;
                 RMQBroker._conn.createChannel().then((ch:Channel)=>{
+                    RMQBroker._chan = ch;
                     res();
                 });
             });
@@ -57,7 +59,5 @@ export default class RMQBroker implements Broker {
 }
 
 function generateUuid() {
-    return Math.random().toString() +
-           Math.random().toString() +
-           Math.random().toString();
+    return randomstring.generate();
   }
