@@ -6,7 +6,7 @@
     "keywords": [],
     "author": "",
     "license": "",
-    "main": "app.js",
+    "main": "app.ts",
     "dependencies": {
         "amqplib": "^0.5.3",
         "bluebird": "^3.5.3",

@@ -28,11 +28,16 @@ nconf.load((err: Error) => {
       // install middleware
       swaggerExpress.register(app);
 
-      var port = process.env.PORT || 8585;
+      var port =  8585;
       app.listen(port);
 
-      if (swaggerExpress.runner.swagger.paths['/ping']) {
+      if (Object.keys(swaggerExpress.runner.swagger.paths).length > 1) {
         console.log('API Gateway Started.');
+        console.log("Paths Registered : \n\t");
+        Object.keys(swaggerExpress.runner.swagger.paths).forEach(key => {
+          console.log(key);
+          console.log("________________________________________\n\t");
+        });
       }
     });
 
