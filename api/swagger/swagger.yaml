@@ -65,12 +65,12 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /members/pong:
+  /members/greet:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
       # used as the method name of the controller
-      operationId: membersPong
+      operationId: greet
       parameters:
         - name: name
           in: query

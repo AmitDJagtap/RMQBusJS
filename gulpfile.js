@@ -17,7 +17,7 @@ gulp.task('clean', function() {
 });
 
 gulp.task("bundle", function() {
-    return gulp.src(['api/swagger/**/*', 'config/**/*'], {
+    return gulp.src(['api/swagger/**/*', 'config/**/*', "package.json"], {
         base: "./"
     }).pipe(gulp.dest(dist));
 });
