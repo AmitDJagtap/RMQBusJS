@@ -47,7 +47,7 @@ paths:
     get:
       description: Performs a pingcheck on a service from API-Gateway
       # used as the method name of the controller
-      operationId: greet
+      operationId: membersPingCheck
       parameters:
         - name: name
           in: query
