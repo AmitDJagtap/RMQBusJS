@@ -58,5 +58,7 @@
      pingfrom: "apigateway"
    };
    bus.publish("globalping", testData);
-   res.json(testData);
+   res.json({
+     "message": "ok"
+   });
  }
