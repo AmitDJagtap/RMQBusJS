@@ -1,4 +1,4 @@
-# Ayopop API Gaetway Project
+# Ayopop API Gateway Project
 
 The api-gateway is nodejs express project which requires installation of nodejs and npm.
 
