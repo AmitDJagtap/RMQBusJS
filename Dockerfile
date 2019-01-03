@@ -2,6 +2,7 @@ FROM node:carbon
 #creating a work dir/folder to store src code
 WORKDIR /usr/src/app
 COPY . .
+RUN mkdir dist
 RUN npm i
 RUN npm i -g gulp
 RUN gulp build
