@@ -88,6 +88,29 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /v1/pingall:
+    x-swagger-router-controller: Misc_Controller
+    get:
+      description: Performs a pingcheck on a service from API-Gateway
+      # used as the method name of the controller
+      operationId: pingAllServices
+      parameters:
+        - name: name
+          in: query
+          description: Test data to send.
+          required: true
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            # a pointer to a definition
+            $ref: "#/definitions/PingCheckResponse"
+        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
 # complex objects have schema definitions
