@@ -11,12 +11,12 @@ echo curl -k -u "${CATTLE_ACCESS_KEY}:${CATTLE_SECRET_KEY}" \
 -X PUT \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
--d '{ "containers": [{ "image": "'${IMAGE}'", "name": "'${NAME}'" }], "imagePullSecrets": [{ "name": "'${REGISTRY_SECRET}'", "type": "/v3/project/schemas/localObjectReference" }], "name": "'${NAME}'", "namespaceId": "'${NAMESPACE}'", "projectId": "'${PROJECT_ID}'", "scale": "'${SCALE}'", "workloadLabels": { "workload.user.cattle.io/workloadselector": "'${WORKLOAD_SELCTER}'" } }' \
+-d '{ "containers": [{ "environmentFrom": [{ "optional": false, "prefix": "", "source": "configMap", "sourceName": "'${NAME}'", "type": "/v3/project/schemas/environmentFrom" }],"image": "'${IMAGE}'", "name": "'${NAME}'" }], "imagePullSecrets": [{ "name": "'${REGISTRY_SECRET}'", "type": "/v3/project/schemas/localObjectReference" }], "name": "'${NAME}'", "namespaceId": "'${NAMESPACE}'", "projectId": "'${PROJECT_ID}'", "scale": "'${SCALE}'", "workloadLabels": { "workload.user.cattle.io/workloadselector": "'${WORKLOAD_SELCTER}'" } }' \
 'https://ec2-35-154-209-143.ap-south-1.compute.amazonaws.com/v3/project/'${PROJECT_ID}'/workloads/deployment:'${NAMESPACE}':'${NAME}
 
  curl -k -u "${CATTLE_ACCESS_KEY}:${CATTLE_SECRET_KEY}" \
 -X PUT \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
--d '{ "containers": [{ "image": "'${IMAGE}'", "name": "'${NAME}'" }], "imagePullSecrets": [{ "name": "'${REGISTRY_SECRET}'", "type": "/v3/project/schemas/localObjectReference" }], "name": "'${NAME}'", "namespaceId": "'${NAMESPACE}'", "projectId": "'${PROJECT_ID}'", "scale": "'${SCALE}'", "workloadLabels": { "workload.user.cattle.io/workloadselector": "'${WORKLOAD_SELCTER}'" } }' \
+-d '{ "containers": [{ "environmentFrom": [{ "optional": false, "prefix": "", "source": "configMap", "sourceName": "'${NAME}'", "type": "/v3/project/schemas/environmentFrom" }] , "image": "'${IMAGE}'", "name": "'${NAME}'" }], "imagePullSecrets": [{ "name": "'${REGISTRY_SECRET}'", "type": "/v3/project/schemas/localObjectReference" }], "name": "'${NAME}'", "namespaceId": "'${NAMESPACE}'", "projectId": "'${PROJECT_ID}'", "scale": "'${SCALE}'", "workloadLabels": { "workload.user.cattle.io/workloadselector": "'${WORKLOAD_SELCTER}'" } }' \
 'https://ec2-35-154-209-143.ap-south-1.compute.amazonaws.com/v3/project/'${PROJECT_ID}'/workloads/deployment:'${NAMESPACE}':'${NAME}
