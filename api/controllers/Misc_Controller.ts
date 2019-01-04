@@ -62,3 +62,20 @@
      "message": "ok"
    });
  }
+
+ export function servicxPingCheck(req:any,res:any,next: any){
+
+  var name = req.swagger.params.name.value || '4';
+  var param = parseInt(name);
+  var bus = new RMQBroker();
+
+  bus.rpc("servicex.ping", {
+    data: param
+  }).then((res_data) => {
+    console.log(res_data.toString());
+    res.json({
+      "message": res_data.toString()
+    });
+  });
+
+ }
