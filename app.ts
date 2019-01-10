@@ -25,10 +25,8 @@ nconf.load((err: Error) => {
         throw err;
       }
 
-      // install middleware
       swaggerExpress.register(app);
-
-      var port =  8585;
+      var port = 8585;
       app.listen(port);
 
       if (Object.keys(swaggerExpress.runner.swagger.paths).length > 1) {

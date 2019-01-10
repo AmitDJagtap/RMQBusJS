@@ -1,8 +1,4 @@
- import util from "util";
  import RMQBroker from '../helpers/RMQBroker'
- import {
-   func
- } from "joi";
 
  export function pingCheck(req: any, res: any, next: any) {
 
@@ -12,7 +8,7 @@
   let dataToSend = {
     data: param
   };
-  
+
    bus.rpc("ayosaldo.ping", dataToSend).then((res_data) => {
      console.log(res_data.toString());
      res.json({

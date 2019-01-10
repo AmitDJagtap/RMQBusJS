@@ -2,28 +2,22 @@ swagger: "2.0"
 info:
   version: "0.0.1"
   title: Ayopop API-Gateway
-# during dev, should point to your local machine
-host: localhost:8585
-# basePath prefixes all resource paths 
-basePath: /
-# 
+basePath: /v1
 schemes:
-  # tip: remove http to make production-grade
   - http
   - https
-# format of bodies a client can send (Content-Type)
 consumes:
   - application/json
-# format of the responses to the client (Accepts)
 produces:
   - application/json
 paths:
   /ayosaldo/ping:
-    # binds a127 app logic to a route
+
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      # used as the method name of the controller
+      tags: 
+        - ayosaldo
       operationId: pingCheck
       parameters:
         - name: name
@@ -35,9 +29,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/PingCheckResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -46,7 +38,6 @@ paths:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      # used as the method name of the controller
       operationId: membersPingCheck
       parameters:
         - name: name
@@ -58,9 +49,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/PingCheckResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -69,7 +58,6 @@ paths:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      # used as the method name of the controller
       operationId: greet
       parameters:
         - name: name
@@ -81,9 +69,7 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/PingCheckResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
@@ -92,7 +78,6 @@ paths:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      # used as the method name of the controller
       operationId: pingAllServices
       parameters:
         - name: name
@@ -104,19 +89,15 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/PingCheckResponse"
-        # responses may fall through to errors
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /servicex/ping:
-    # binds a127 app logic to a route
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      # used as the method name of the controller
       operationId: servicxPingCheck
       parameters:
         - name: name
@@ -128,16 +109,34 @@ paths:
         "200":
           description: Success
           schema:
-            # a pointer to a definition
             $ref: "#/definitions/PingCheckResponse"
-        # responses may fall through to errors
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+  /auth/login:
+    x-swagger-router-controller: AuthController
+    post:
+      description: Performs login and return a encoded token
+       - auth
+      operationId: generateauthtoken
+      parameters:
+        - name: name
+          in: query
+          description: The name of the service to perform the pingcheck 
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/PingCheckResponse"
         default:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
   /swagger:
     x-swagger-pipe: swagger_raw
-# complex objects have schema definitions
 definitions:
   PingCheckResponse:
     required:
