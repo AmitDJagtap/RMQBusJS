@@ -17,29 +17,30 @@ nconf.argv()
   .file({
     file: path.join(__dirname, 'config/config.json')
   });
+console.log(nconf.get("rabbitmq"));
+console.log(nconf.get("rmquri"));
+new RMQBroker().init(nconf.get("rabbitmq")).then(() => {
 
-  new RMQBroker().init(nconf.get("rabbitmq")).then(() => {
+  SwaggerExpress.create(config, function (err: any, swaggerExpress: any) {
+    if (err) {
+      throw err;
+    }
+    let port = process.env.port || 8585;
+    app.use(bodyParser.urlencoded({
+      extended: false
+    }))
+    app.use(bodyParser.json());
+    swaggerExpress.register(app);
+    app.listen(port);
 
-    SwaggerExpress.create(config, function (err: any, swaggerExpress: any) {
-      if (err) {
-        throw err;
-      }
-      let port = process.env.port || 8585;
-      app.use(bodyParser.urlencoded({
-        extended: false
-      }))
-      app.use(bodyParser.json());
-      swaggerExpress.register(app);
-      app.listen(port);
-
-      if (Object.keys(swaggerExpress.runner.swagger.paths).length > 1) {
-        console.log('API Gateway Started.');
-        console.log("Paths Registered : \n\t");
-        Object.keys(swaggerExpress.runner.swagger.paths).forEach(key => {
-          console.log(key);
-          console.log("________________________________________\n\t");
-        });
-      }
-    });
-
+    if (Object.keys(swaggerExpress.runner.swagger.paths).length > 1) {
+      console.log('API Gateway Started.');
+      console.log("Paths Registered : \n\t");
+      Object.keys(swaggerExpress.runner.swagger.paths).forEach(key => {
+        console.log(key);
+        console.log("________________________________________\n\t");
+      });
+    }
   });
+
+});

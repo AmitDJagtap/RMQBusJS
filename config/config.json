@@ -14,5 +14,6 @@
     },
     "rabbitmq": {
         "url": "amqp://localhost"
-    }
+    },
+    "rmquri": "amqp://localhost1"
 }
