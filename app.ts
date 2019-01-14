@@ -4,6 +4,7 @@ import path from "path";
 import express from "express";
 var SwaggerExpress = require('swagger-express-mw');
 import RMQBroker from "./api/helpers/RMQBroker";
+import bodyParser from 'body-parser';
 let app = express();
 
 
@@ -17,16 +18,18 @@ nconf.argv()
     file: path.join(__dirname, 'config/config.json')
   });
 
-nconf.load((err: Error) => {
   new RMQBroker().init(nconf.get("rabbitmq")).then(() => {
 
     SwaggerExpress.create(config, function (err: any, swaggerExpress: any) {
       if (err) {
         throw err;
       }
-
+      let port = process.env.port || 8585;
+      app.use(bodyParser.urlencoded({
+        extended: false
+      }))
+      app.use(bodyParser.json());
       swaggerExpress.register(app);
-      var port = 8585;
       app.listen(port);
 
       if (Object.keys(swaggerExpress.runner.swagger.paths).length > 1) {
@@ -40,4 +43,3 @@ nconf.load((err: Error) => {
     });
 
   });
-});
