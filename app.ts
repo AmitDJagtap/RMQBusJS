@@ -17,9 +17,9 @@ nconf.argv()
   .file({
     file: path.join(__dirname, 'config/config.json')
   });
-console.log(nconf.get("rabbitmq"));
-console.log(nconf.get("rmquri"));
-new RMQBroker().init(nconf.get("rabbitmq")).then(() => {
+let rabbitmqConf = JSON.parse(nconf.get("rabbitmq"));
+console.log(rabbitmqConf);
+new RMQBroker().init(rabbitmqConf).then(() => {
 
   SwaggerExpress.create(config, function (err: any, swaggerExpress: any) {
     if (err) {
