@@ -16,6 +16,8 @@ export default class RMQBroker implements Broker {
     private static _functionsDir = __dirname + '/api/services/*.js';
 
     init(rmqConfig: any): Promise < any > {
+        console.log(rmqConfig);
+        console.log(rmqConfig.url);
         return new Promise < any > ((res, rej) => {
 
             amqp.connect(rmqConfig.url).then((connectedCon: Connection) => {
