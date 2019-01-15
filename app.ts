@@ -18,6 +18,7 @@ nconf.argv()
     file: path.join(__dirname, 'config/config.json')
   });
 
+  
 let rabbitmqConf = nconf.get("rabbitmq");
 if (typeof rabbitmqConf === "string") {
   rabbitmqConf = JSON.parse(rabbitmqConf);
