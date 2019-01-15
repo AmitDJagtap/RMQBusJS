@@ -34,6 +34,30 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+  /members/login:
+        # binds a127 app logic to a route
+        x-swagger-router-controller: AuthController
+        post:
+          description: Performs a User authentication with Ayopop System - validate the user is authenticated
+          # used as the method name of the controller
+          operationId: memberLogin
+          parameters:
+            - name: phone
+              in: query
+              description: The name of the service to perform the pingcheck
+              required: false
+              type: string
+          responses:
+            "200":
+              description: Success
+              schema:
+                # a pointer to a definition
+                $ref: "#/definitions/MembersLoginResponse"
+            # responses may fall through to errors
+            default:
+              description: Error
+              schema:
+                $ref: "#/definitions/ErrorResponse"
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
@@ -133,6 +157,13 @@ paths:
   /swagger:
     x-swagger-pipe: swagger_raw
 definitions:
+  MembersLoginResponse:
+    properties:
+      success:
+        type: boolean
+      data:
+        type: object
+        
   PingCheckResponse:
     required:
       - message
