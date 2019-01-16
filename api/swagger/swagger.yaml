@@ -58,6 +58,30 @@ paths:
               description: Error
               schema:
                 $ref: "#/definitions/ErrorResponse"
+  /members/verifyAccount:
+        # binds a127 app logic to a route
+        x-swagger-router-controller: AuthController
+        post:
+          description: This function will verify the members account with ayopop system
+          # used as the method name of the controller
+          operationId: verifyAccount
+          parameters:
+            - name: phone
+              in: query
+              description: The name of the service to perform the pingcheck
+              required: false
+              type: string
+          responses:
+            "200":
+              description: Success
+              schema:
+                # a pointer to a definition
+                $ref: "#/definitions/MembersLoginResponse"
+            # responses may fall through to errors
+            default:
+              description: Error
+              schema:
+                $ref: "#/definitions/ErrorResponse"
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
