@@ -5,7 +5,7 @@ export function verifyPin(req: any, res: any, next: any) {
     let bus = new RMQBroker();
     let dataToSend = req.body;
 
-    bus.rpc("authProxy.verifyPin", dataToSend).then((res_data) => {
+    bus.rpc("authproxy.verifyPin", dataToSend).then((res_data) => {
         res.json({"token" : res_data.toString()});
     });
 
