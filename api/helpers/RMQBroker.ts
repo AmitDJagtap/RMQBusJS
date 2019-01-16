@@ -55,7 +55,7 @@ export default class RMQBroker implements Broker {
 
                 RMQBroker._chan.consume(q.queue, function (msg) {
                     if (msg.properties.correlationId == corr) {
-                        console.log(' Response Received ', msg.content.toString());
+                        console.log('Response Received for : ' + q.queue);
                         res(msg.content);
                     }
                 }, {

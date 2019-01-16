@@ -10,54 +10,32 @@ consumes:
   - application/json
 produces:
   - application/json
+  
 paths:
-  /ayosaldo/ping:
-
-    x-swagger-router-controller: Misc_Controller
-    get:
-      description: Performs a pingcheck on a service from API-Gateway
-      tags: 
-        - ayosaldo
-      operationId: pingCheck
-      parameters:
-        - name: name
-          in: query
-          description: The name of the service to perform the pingcheck 
-          required: false
-          type: string
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/PingCheckResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
+            
   /members/login:
-        # binds a127 app logic to a route
-        x-swagger-router-controller: AuthController
-        post:
-          description: Performs a User authentication with Ayopop System - validate the user is authenticated
-          # used as the method name of the controller
-          operationId: memberLogin
-          parameters:
-            - name: phone
-              in: query
-              description: The name of the service to perform the pingcheck
-              required: false
-              type: string
-          responses:
+    x-swagger-router-controller: AuthController
+    post:
+      description: Performs a User authentication with Ayopop System - validate the user is authenticated
+      operationId: memberLogin
+      parameters:
+        - name: usermetadata
+          in: body
+          description: The input for memebers login
+          schema:
+            $ref: "#/definitions/UserMeta" 
+      responses:
             "200":
               description: Success
               schema:
-                # a pointer to a definition
                 $ref: "#/definitions/MembersLoginResponse"
-            # responses may fall through to errors
             default:
               description: Error
               schema:
                 $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+
   /members/verifyAccount:
         # binds a127 app logic to a route
         x-swagger-router-controller: AuthController
@@ -82,6 +60,9 @@ paths:
               description: Error
               schema:
                 $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+        
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
@@ -102,6 +83,9 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+        
   /members/greet:
     x-swagger-router-controller: Misc_Controller
     get:
@@ -122,7 +106,10 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /v1/pingall:
+      tags:
+        - members
+            
+  /services/pingall:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
@@ -142,11 +129,35 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /servicex/ping:
+            
+  /auth/verifyPin:
+    x-swagger-router-controller: AuthController
+    post:
+      description: Verifies auth pin and returns a encoded token or opaque
+      operationId: verifyPin
+      parameters:
+        - name: Credentials
+          in: body
+          description: The input credentials for authetication 
+          schema:
+            $ref: "#/definitions/AuthInput" 
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/AuthResponse"
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - auth
+        
+  /ayosaldo/ping:
     x-swagger-router-controller: Misc_Controller
     get:
       description: Performs a pingcheck on a service from API-Gateway
-      operationId: servicxPingCheck
+      operationId: pingCheck
       parameters:
         - name: name
           in: query
@@ -162,24 +173,12 @@ paths:
           description: Error
           schema:
             $ref: "#/definitions/ErrorResponse"
-  /auth/login:
-    x-swagger-router-controller: AuthController
-    post:
-      description: Performs login and return a encoded token
-      operationId: generateauthtoken
-      responses:
-        "200":
-          description: Success
-          schema:
-            $ref: "#/definitions/PingCheckResponse"
-        default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-      tags:
-        - auth
+      tags: 
+        - ayosaldo
+        
   /swagger:
     x-swagger-pipe: swagger_raw
+    
 definitions:
   MembersLoginResponse:
     properties:
@@ -200,3 +199,21 @@ definitions:
     properties:
       message:
         type: string
+  UserMeta:
+   properties:
+      phone:
+        type: string
+      password:
+        type: string
+      header:
+        type: object
+  AuthInput:
+   properties:
+      phone:
+        type: string
+      password:
+        type: string
+  AuthResponse:
+   properties:
+      token:
+       type : string
