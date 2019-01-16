@@ -1,13 +1,12 @@
 import RMQBroker from '../helpers/RMQBroker'
 
-export function generateauthtoken(req: any, res: any, next: any) {
+export function verifyPin(req: any, res: any, next: any) {
 
     let bus = new RMQBroker();
     let dataToSend = req.body;
 
-    bus.rpc("authProxy.login", dataToSend).then((res_data) => {
-        console.log(res_data.toString());
-        res.json({"data" : res_data.toString()});
+    bus.rpc("authProxy.verifyPin", dataToSend).then((res_data) => {
+        res.json({"token" : res_data.toString()});
     });
 
 }

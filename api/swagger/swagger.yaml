@@ -103,22 +103,22 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /auth/login:
+  /auth/verifyPin:
     x-swagger-router-controller: AuthController
     post:
-      description: Performs login and return a encoded token or opaque
-      operationId: generateauthtoken
+      description: Verifies auth pin and returns a encoded token or opaque
+      operationId: verifyPin
       parameters:
-        - name: usermetadata
+        - name: Credentials
           in: body
-          description: The input for authetication 
+          description: The input credentials for authetication 
           schema:
-            $ref: "#/definitions/User" 
+            $ref: "#/definitions/AuthInput" 
       responses:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/PingCheckResponse"
+            $ref: "#/definitions/AuthResponse"
         default:
           description: Error
           schema:
@@ -180,9 +180,13 @@ definitions:
         type: string
       header:
         type: object
-  User:
+  AuthInput:
    properties:
       phone:
         type: string
       password:
         type: string
+  AuthResponse:
+   properties:
+      token:
+       type : string
