@@ -208,6 +208,9 @@ definitions:
         type: string
       password:
         type: string
+   example:   # Sample object
+      phone: 918859564575
+      password: mypassword123
   AuthResponse:
    properties:
       token:
