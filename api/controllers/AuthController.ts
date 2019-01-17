@@ -43,3 +43,35 @@ export function verifyAccount(req:any,res:any,next: any){
     });
 
 }
+
+/**
+ * This is the Service call to members verify Access Token
+ * @param req
+ * @param res
+ * @param next
+ */
+export function verifyAccessToken(req:any,res:any,next: any){
+    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+    var bus = new RMQBroker();
+    console.log(data);
+    bus.rpc("members.verifyAccessToken", data).then((res_data) => {
+        console.log(res_data.toString());
+        res.json(JSON.parse(res_data.toString()));
+    });
+}
+
+/**
+ * This is the Service call to members verify Access Token
+ * @param req
+ * @param res
+ * @param next
+ */
+export function verifyOTP(req:any,res:any,next: any){
+    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+    var bus = new RMQBroker();
+    console.log(data);
+    bus.rpc("members.verifyOTP", data).then((res_data) => {
+        console.log(res_data.toString());
+        res.json(JSON.parse(res_data.toString()));
+    });
+}

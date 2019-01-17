@@ -47,6 +47,28 @@ paths:
           required: false
           type: string
       responses:
+            "200":
+              description: Success
+              schema:
+                $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            default:
+              description: Error
+              schema:
+                $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+  /members/verifyAccessToken:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will verify the Social Auth token and is valid or not # used as the method name of the controller
+      operationId: verifyAccessToken
+      parameters:
+        - name: accessToken
+          in: query
+          description: The name of the service to perform the pingcheck
+          required: false
+          type: string
+      responses:
         "200":
           description: Success
           schema:
@@ -57,7 +79,33 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       tags:
         - members
-
+  /members/verifyOTP:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will verify the otp # used as the method name of the controller
+      operationId: verifyOTP
+      parameters:
+        - name: OTP
+          in: query
+          description: the function will verify otp is valid or not
+          required: false
+          type: string
+        - name: phoneNumber
+          in: query
+          description: the function will verify otp is valid or not
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
