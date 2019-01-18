@@ -170,6 +170,48 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       tags:
         - members
+  /members/registerAPI:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will update user info # used as the method name of the controller
+      operationId: registerAPI
+      parameters:
+        - name: phoneNumber
+          in: query
+          description: phone number which is linked to your account
+          required: false
+          type: string
+        - name: typeIndex
+          in: query
+          description: type index
+          required: false
+          type: string
+        - name: ageRange
+          in: query
+          description: user age
+          required: false
+          type: string
+        - name: newPin
+          in: query
+          description: newPin used to reset or verify
+          required: false
+          type: string
+        - name: language
+          in: query
+          description: user language
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
