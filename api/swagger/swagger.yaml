@@ -279,11 +279,11 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /auth/verifyPin:
+  /auth/generateToken:
     x-swagger-router-controller: AuthController
     post:
-      description: Verifies auth pin and returns a encoded token or opaque
-      operationId: verifyPin2
+      description: Verifies auth pin and returns a encoded token.
+      operationId: generateToken
       parameters:
         - name: Credentials
           in: body
