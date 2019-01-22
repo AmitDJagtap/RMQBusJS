@@ -364,7 +364,7 @@ definitions:
         type: string
    example:   # Sample object
       phone: 918859564575
-      pin: mypassword123
+      pin: 123456
   AuthResponse:
    properties:
       token:
