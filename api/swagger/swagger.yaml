@@ -360,11 +360,11 @@ definitions:
    properties:
       phone:
         type: string
-      password:
+      pin:
         type: string
    example:   # Sample object
       phone: 918859564575
-      password: mypassword123
+      pin: mypassword123
   AuthResponse:
    properties:
       token:
