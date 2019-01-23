@@ -48,6 +48,7 @@ export default class RMQBroker implements Broker {
         return new Promise < any > ((res, rej) => {
             console.log("RPC Invoked : " + topic);
             let buf = Buffer.from(JSON.stringify(message));
+
             RMQBroker._chan.assertQueue('', {
                 exclusive: true
             }).then((q: Replies.AssertQueue) => {
@@ -66,6 +67,11 @@ export default class RMQBroker implements Broker {
                     correlationId: corr,
                     replyTo: q.queue
                 });
+                // return if no respose received from topic in 15 sec's
+                setTimeout(() => {
+                    res(false);
+                }, 15000);
+
             });
 
 
