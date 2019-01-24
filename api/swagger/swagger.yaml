@@ -212,6 +212,28 @@ paths:
             $ref: "#/definitions/ErrorResponse"
       tags:
         - members
+  /members/forgotPin:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will send otp and reset pin # used as the method name of the controller
+      operationId: forgotPin
+      parameters:
+        - name: phoneNumber
+          in: query
+          description: phone number which is linked to your account
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
   /members/ping:
     x-swagger-router-controller: Misc_Controller
     get:
