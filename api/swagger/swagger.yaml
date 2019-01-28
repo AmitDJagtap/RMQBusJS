@@ -38,7 +38,7 @@ paths:
   /members/verifyAccount:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the members account with ayopop system # used as the method name of the controller
+      description: This function will verify the members account with ayopop system 
       operationId: verifyAccount
       parameters:
         - name: phone
@@ -50,7 +50,7 @@ paths:
             "200":
               description: Success
               schema:
-                $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+                $ref: "#/definitions/MembersLoginResponse"  
             default:
               description: Error
               schema:
@@ -60,7 +60,7 @@ paths:
   /members/verifyAccessToken:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the Social Auth token and is valid or not # used as the method name of the controller
+      description: This function will verify the Social Auth token and is valid or not 
       operationId: verifyAccessToken
       parameters:
         - name: accessToken
@@ -72,7 +72,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -82,7 +82,7 @@ paths:
   /members/verifyOTP:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the otp # used as the method name of the controller
+      description: This function will verify the otp 
       operationId: verifyOTP
       parameters:
         - name: OTP
@@ -99,7 +99,135 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+  /members/resendOTP:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will resend the otp 
+      operationId: resendOTP
+      parameters:
+        - name: OTP
+          in: query
+          description: the function will resend the new otp
+          required: false
+          type: string
+        - name: phoneNumber
+          in: query
+          description: valid phone number which is linked to your account
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+  /members/verifyPin:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will verify the pin 
+      operationId: verifyPin
+      parameters:
+        - name: phoneNumber
+          in: query
+          description: phone number which is linked to your account
+          required: false
+          type: string
+        - name: pin
+          in: query
+          description: pin used to validate accound
+          required: false
+          type: string
+        - name: type
+          in: query
+          description: type used to check reset or verify
+          required: false
+          type: string
+        - name: newPin
+          in: query
+          description: newPin used to reset or verify
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+  /members/registerAPI:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will update user info 
+      operationId: registerAPI
+      parameters:
+        - name: phoneNumber
+          in: query
+          description: phone number which is linked to your account
+          required: false
+          type: string
+        - name: typeIndex
+          in: query
+          description: type index
+          required: false
+          type: string
+        - name: ageRange
+          in: query
+          description: user age
+          required: false
+          type: string
+        - name: newPin
+          in: query
+          description: newPin used to reset or verify
+          required: false
+          type: string
+        - name: language
+          in: query
+          description: user language
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  
+        default:
+          description: Error
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags:
+        - members
+  /members/forgotPin:
+    x-swagger-router-controller: AuthController
+    post:
+      description: This function will send otp and reset pin 
+      operationId: forgotPin
+      parameters:
+        - name: phoneNumber
+          in: query
+          description: phone number which is linked to your account
+          required: false
+          type: string
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -173,11 +301,11 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
             
-  /auth/verifyPin:
+  /auth/generateToken:
     x-swagger-router-controller: AuthController
     post:
-      description: Verifies auth pin and returns a encoded token or opaque
-      operationId: verifyPin
+      description: Verifies auth pin and returns a encoded token.
+      operationId: generateToken
       parameters:
         - name: Credentials
           in: body
@@ -254,8 +382,11 @@ definitions:
    properties:
       phone:
         type: string
-      password:
+      pin:
         type: string
+   example:   # Sample object
+      phone: 918859564575
+      pin: 123456
   AuthResponse:
    properties:
       token:

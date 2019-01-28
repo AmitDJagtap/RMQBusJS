@@ -35,7 +35,7 @@ export default class RMQBroker implements Broker {
             durable: false
         });
         let ok = RMQBroker._chan.publish(exchangeTopic, '', buff);
-        console.log(" [x] Sent.");
+        console.log("[x] Event Published : " + exchangeTopic);
         return ok;
     }
 
@@ -46,8 +46,9 @@ export default class RMQBroker implements Broker {
     rpc(topic: string, message: any): Promise < any > {
 
         return new Promise < any > ((res, rej) => {
-            console.log("RPC Invoked : " + topic);
+            console.log("[x] RPC Invoked : " + topic);
             let buf = Buffer.from(JSON.stringify(message));
+
             RMQBroker._chan.assertQueue('', {
                 exclusive: true
             }).then((q: Replies.AssertQueue) => {
@@ -55,7 +56,7 @@ export default class RMQBroker implements Broker {
 
                 RMQBroker._chan.consume(q.queue, function (msg) {
                     if (msg.properties.correlationId == corr) {
-                        console.log('Response Received for : ' + q.queue);
+                        console.log('[x] Response Received for : ' + q.queue);
                         res(msg.content);
                     }
                 }, {
@@ -66,6 +67,11 @@ export default class RMQBroker implements Broker {
                     correlationId: corr,
                     replyTo: q.queue
                 });
+                // return if no respose received from topic in 15 sec's
+                setTimeout(() => {
+                    res(false);
+                }, 15000);
+
             });
 
 
