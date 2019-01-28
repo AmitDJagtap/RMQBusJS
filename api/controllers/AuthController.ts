@@ -1,4 +1,5 @@
 import RMQBroker from '../helpers/RMQBroker'
+import {array} from "joi";
 
 export function generateToken(req: any, res: any, next: any) {
 
@@ -19,13 +20,8 @@ export function generateToken(req: any, res: any, next: any) {
  * @param res
  * @param next
  */
-export function memberLogin(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+export function memberLogin(req:any,res:any,next: any){
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.login", data).then((res_data) => {
@@ -40,13 +36,8 @@ export function memberLogin(req: any, res: any, next: any) {
  * @param res
  * @param next
  */
-export function verifyAccount(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+export function verifyAccount(req:any,res:any,next: any){
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.verifyAccount", data).then((res_data) => {
@@ -62,13 +53,8 @@ export function verifyAccount(req: any, res: any, next: any) {
  * @param res
  * @param next
  */
-export function verifyAccessToken(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+export function verifyAccessToken(req:any,res:any,next: any){
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
     bus.rpc("members.verifyAccessToken", data).then((res_data) => {
         res.json(JSON.parse(res_data.toString()));
@@ -81,13 +67,8 @@ export function verifyAccessToken(req: any, res: any, next: any) {
  * @param res
  * @param next
  */
-export function verifyOTP(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+export function verifyOTP(req:any,res:any,next: any){
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
     bus.rpc("members.verifyOTP", data).then((res_data) => {
         res.json(JSON.parse(res_data.toString()));
@@ -172,4 +153,18 @@ export function forgotPin(req: any, res: any, next: any) {
     bus.rpc("members.forgotPin", data).then((res_data) => {
         res.json(JSON.parse(res_data.toString()));
     });
+}
+
+/**
+ * Function will generate the request data for members service
+ * @param req
+ * @returns {{headers: *, param: *, apiPath: string | *, method: *}}
+ */
+function getRequestData(req:any){
+    var headers = req.headers;
+    headers["apiPath"] = req.originalUrl;
+    headers["method"] = req.method;
+    headers["requestIp"] = req.connection.remoteAddress;
+    var data = { "headers": req.headers, "param": req.body, "apiPath": req.originalUrl, "method": req.method,"requestIp":req.connection.remoteAddress};
+    return data;
 }
