@@ -82,12 +82,7 @@ export function verifyOTP(req:any,res:any,next: any){
  * @param next
  */
 export function resendOTP(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.resendOTP", data).then((res_data) => {
@@ -102,12 +97,7 @@ export function resendOTP(req: any, res: any, next: any) {
  * @param next
  */
 export function verifyPin(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.verifyPin", data).then((res_data) => {
@@ -122,12 +112,7 @@ export function verifyPin(req: any, res: any, next: any) {
  * @param next
  */
 export function registerAPI(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.registerAPI", data).then((res_data) => {
@@ -142,12 +127,7 @@ export function registerAPI(req: any, res: any, next: any) {
  * @param next
  */
 export function forgotPin(req: any, res: any, next: any) {
-    var data = {
-        "headers": req.headers,
-        "param": req.body,
-        "apiPath": req.originalUrl,
-        "method": req.method
-    };
+    var data =  getRequestData(req);
     var bus = new RMQBroker();
 
     bus.rpc("members.forgotPin", data).then((res_data) => {
