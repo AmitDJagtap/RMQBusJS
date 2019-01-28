@@ -38,7 +38,7 @@ paths:
   /members/verifyAccount:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the members account with ayopop system # used as the method name of the controller
+      description: This function will verify the members account with ayopop system 
       operationId: verifyAccount
       parameters:
         - name: phone
@@ -50,7 +50,7 @@ paths:
             "200":
               description: Success
               schema:
-                $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+                $ref: "#/definitions/MembersLoginResponse"  
             default:
               description: Error
               schema:
@@ -60,7 +60,7 @@ paths:
   /members/verifyAccessToken:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the Social Auth token and is valid or not # used as the method name of the controller
+      description: This function will verify the Social Auth token and is valid or not 
       operationId: verifyAccessToken
       parameters:
         - name: accessToken
@@ -72,7 +72,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -82,7 +82,7 @@ paths:
   /members/verifyOTP:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the otp # used as the method name of the controller
+      description: This function will verify the otp 
       operationId: verifyOTP
       parameters:
         - name: OTP
@@ -99,7 +99,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -109,7 +109,7 @@ paths:
   /members/resendOTP:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will resend the otp # used as the method name of the controller
+      description: This function will resend the otp 
       operationId: resendOTP
       parameters:
         - name: OTP
@@ -126,7 +126,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -136,7 +136,7 @@ paths:
   /members/verifyPin:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will verify the pin # used as the method name of the controller
+      description: This function will verify the pin 
       operationId: verifyPin
       parameters:
         - name: phoneNumber
@@ -163,7 +163,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -173,7 +173,7 @@ paths:
   /members/registerAPI:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will update user info # used as the method name of the controller
+      description: This function will update user info 
       operationId: registerAPI
       parameters:
         - name: phoneNumber
@@ -205,7 +205,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:
@@ -215,7 +215,7 @@ paths:
   /members/forgotPin:
     x-swagger-router-controller: AuthController
     post:
-      description: This function will send otp and reset pin # used as the method name of the controller
+      description: This function will send otp and reset pin 
       operationId: forgotPin
       parameters:
         - name: phoneNumber
@@ -227,7 +227,7 @@ paths:
         "200":
           description: Success
           schema:
-            $ref: "#/definitions/MembersLoginResponse"  # a pointer to a definition
+            $ref: "#/definitions/MembersLoginResponse"  
         default:
           description: Error
           schema:

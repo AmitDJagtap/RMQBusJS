@@ -6,7 +6,9 @@ export function generateToken(req: any, res: any, next: any) {
     let dataToSend = req.body;
 
     bus.rpc("authproxy.generateToken", dataToSend).then((res_data) => {
-        res.json({"token" : res_data.toString()});
+        res.json({
+            "token": res_data.toString()
+        });
     });
 
 }
@@ -17,8 +19,13 @@ export function generateToken(req: any, res: any, next: any) {
  * @param res
  * @param next
  */
-export function memberLogin(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function memberLogin(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
 
     bus.rpc("members.login", data).then((res_data) => {
@@ -33,8 +40,13 @@ export function memberLogin(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function verifyAccount(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function verifyAccount(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
 
     bus.rpc("members.verifyAccount", data).then((res_data) => {
@@ -50,8 +62,13 @@ export function verifyAccount(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function verifyAccessToken(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function verifyAccessToken(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.verifyAccessToken", data).then((res_data) => {
@@ -66,8 +83,13 @@ export function verifyAccessToken(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function verifyOTP(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function verifyOTP(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.verifyOTP", data).then((res_data) => {
@@ -82,8 +104,13 @@ export function verifyOTP(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function resendOTP(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function resendOTP(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.resendOTP", data).then((res_data) => {
@@ -98,8 +125,13 @@ export function resendOTP(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function verifyPin(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function verifyPin(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.verifyPin", data).then((res_data) => {
@@ -114,8 +146,13 @@ export function verifyPin(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function registerAPI(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function registerAPI(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.registerAPI", data).then((res_data) => {
@@ -130,8 +167,13 @@ export function registerAPI(req:any,res:any,next: any){
  * @param res
  * @param next
  */
-export function forgotPin(req:any,res:any,next: any){
-    var data = {"headers":req.headers,"param": req.body,"apiPath":req.originalUrl,"method":req.method};
+export function forgotPin(req: any, res: any, next: any) {
+    var data = {
+        "headers": req.headers,
+        "param": req.body,
+        "apiPath": req.originalUrl,
+        "method": req.method
+    };
     var bus = new RMQBroker();
     console.log(data);
     bus.rpc("members.forgotPin", data).then((res_data) => {
