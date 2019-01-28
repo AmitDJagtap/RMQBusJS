@@ -29,7 +29,7 @@ export function memberLogin(req: any, res: any, next: any) {
     var bus = new RMQBroker();
 
     bus.rpc("members.login", data).then((res_data) => {
-        console.log(res_data.toString());
+
         res.json(JSON.parse(res_data.toString()));
     });
 
@@ -50,7 +50,7 @@ export function verifyAccount(req: any, res: any, next: any) {
     var bus = new RMQBroker();
 
     bus.rpc("members.verifyAccount", data).then((res_data) => {
-        console.log(res_data.toString());
+
         res.json(JSON.parse(res_data.toString()));
     });
 
@@ -70,9 +70,7 @@ export function verifyAccessToken(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
     bus.rpc("members.verifyAccessToken", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }
@@ -91,9 +89,7 @@ export function verifyOTP(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
     bus.rpc("members.verifyOTP", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }
@@ -112,9 +108,8 @@ export function resendOTP(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
+
     bus.rpc("members.resendOTP", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }
@@ -133,9 +128,8 @@ export function verifyPin(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
+
     bus.rpc("members.verifyPin", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }
@@ -154,9 +148,8 @@ export function registerAPI(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
+
     bus.rpc("members.registerAPI", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }
@@ -175,9 +168,8 @@ export function forgotPin(req: any, res: any, next: any) {
         "method": req.method
     };
     var bus = new RMQBroker();
-    console.log(data);
+
     bus.rpc("members.forgotPin", data).then((res_data) => {
-        console.log(res_data.toString());
         res.json(JSON.parse(res_data.toString()));
     });
 }

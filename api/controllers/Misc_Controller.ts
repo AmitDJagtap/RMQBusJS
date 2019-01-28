@@ -10,7 +10,6 @@
   };
 
    bus.rpc("ayosaldo.ping", dataToSend).then((res_data) => {
-     console.log(res_data.toString());
      res.json({
        "message": res_data.toString()
      });
@@ -26,7 +25,6 @@
    bus.rpc("members.ping", {
      data: param
    }).then((res_data) => {
-     console.log(res_data.toString());
      res.json({
        "message": res_data.toString()
      });
@@ -40,7 +38,6 @@
    bus.rpc("members.sayhi", {
      data: name
    }).then((res_data) => {
-     console.log(res_data.toString());
      res.json({
        "message": res_data.toString()
      });
@@ -69,7 +66,6 @@
   bus.rpc("servicex.ping", {
     data: param
   }).then((res_data) => {
-    console.log(res_data.toString());
     res.json({
       "message": res_data.toString()
     });
