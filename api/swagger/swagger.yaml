@@ -371,6 +371,10 @@ definitions:
       message:
         type: string
   UserMeta:
+   required:
+      - phone
+      - password
+      - header
    properties:
       phone:
         type: string
