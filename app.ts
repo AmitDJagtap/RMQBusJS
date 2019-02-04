@@ -1,6 +1,7 @@
 'use strict';
 import nconf from "nconf";
 import path from "path";
+import cors from 'cors';
 import express from "express";
 var SwaggerExpress = require('swagger-express-mw');
 import RMQBroker from "./api/helpers/RMQBroker";
@@ -34,6 +35,7 @@ new RMQBroker().init(rabbitmqConf).then(() => {
       extended: false
     }))
     app.use(bodyParser.json());
+    app.use(cors())
     swaggerExpress.register(app);
     app.listen(port);
 
