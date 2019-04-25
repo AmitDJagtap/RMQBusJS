@@ -1,11 +1,12 @@
 {
     "name": "rmqbusjs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A package to make rpc calls and publish async events via rabbitmq ",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc"
+        "build": "tsc",
+        "prepare": "npm run build"
     },
     "keywords": [
         "rabbitmq",
@@ -20,5 +21,6 @@
     "dependencies": {
         "@types/amqplib": "^0.5.11",
         "amqplib": "^0.5.3"
-    }
+    },
+    "files": ["lib/**/*"]
 }
