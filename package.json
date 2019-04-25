@@ -1,0 +1,24 @@
+{
+    "name": "rmqbusjs",
+    "version": "1.0.0",
+    "description": "A package to make rpc calls and publish async events via rabbitmq ",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc"
+    },
+    "keywords": [
+        "rabbitmq",
+        "microservices"
+    ],
+    "author": "damitj07",
+    "license": "ISC",
+    "repository": "bamblehorse/tiny",
+    "devDependencies": {
+        "typescript": "^3.4.5"
+    },
+    "dependencies": {
+        "@types/amqplib": "^0.5.11",
+        "amqplib": "^0.5.3"
+    }
+}
