@@ -2,11 +2,18 @@
     "name": "rmqbusjs",
     "version": "1.0.1",
     "description": "A package to make rpc calls and publish async events via rabbitmq ",
-    "main": "index.js",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest --config jestconfig.json",
         "build": "tsc",
-        "prepare": "npm run build"
+        "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+        "lint": "tslint -p tsconfig.json",
+        "prepare": "npm run build",
+        "prepublishOnly": "npm test && npm run lint",
+        "preversion": "npm run lint",
+        "version": "npm run format && git add -A src",
+        "postversion": "git push && git push --tags"
     },
     "keywords": [
         "rabbitmq",
@@ -16,11 +23,19 @@
     "license": "ISC",
     "repository": "bamblehorse/tiny",
     "devDependencies": {
+        "@types/jest": "^24.0.12",
+        "jest": "^24.8.0",
+        "prettier": "^1.17.0",
+        "ts-jest": "^24.0.2",
+        "tslint": "^5.16.0",
+        "tslint-config-prettier": "^1.18.0",
         "typescript": "^3.4.5"
     },
     "dependencies": {
         "@types/amqplib": "^0.5.11",
         "amqplib": "^0.5.3"
     },
-    "files": ["lib/**/*"]
+    "files": [
+        "lib/**/*"
+    ]
 }
