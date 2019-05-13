@@ -42,13 +42,12 @@ export default class RMQBroker implements IBroker {
       console.log('[x] RPC Invoked : ' + topic);
       const buf = Buffer.from(JSON.stringify(message));
 
-      RMQBroker.CHAN
-        .assertQueue('', { exclusive: true, durable: false, autoDelete: true })
+      RMQBroker.CHAN.assertQueue('', { exclusive: true, durable: false, autoDelete: true })
         .then((q: Replies.AssertQueue) => {
-            const corr = generateUuid();
+          const corr = generateUuid();
           RMQBroker.CHAN.consume(
             q.queue,
-            (msg: any)=> {
+            (msg: any) => {
               if (msg && msg.properties.correlationId === corr) {
                 const consumerTag = msg.fields.consumerTag;
                 console.log('[x] Response Received for : ' + q.queue);
