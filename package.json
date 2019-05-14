@@ -23,6 +23,7 @@
     "license": "ISC",
     "repository": "bamblehorse/tiny",
     "devDependencies": {
+        "@types/glob": "^7.1.1",
         "@types/jest": "^24.0.12",
         "jest": "^24.8.0",
         "prettier": "^1.17.0",
@@ -33,7 +34,8 @@
     },
     "dependencies": {
         "@types/amqplib": "^0.5.11",
-        "amqplib": "^0.5.3"
+        "amqplib": "^0.5.3",
+        "glob": "^7.1.4"
     },
     "files": [
         "lib/**/*"

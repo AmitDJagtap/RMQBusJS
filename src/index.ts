@@ -1,6 +1,7 @@
 import { IBroker } from './Broker';
 import * as amqp from 'amqplib';
 import { Connection, Channel, Replies } from 'amqplib';
+import FunctionRegistry from './FunctionRegistory';
 
 export default class RMQBroker implements IBroker {
   private static CONN: Connection;
@@ -17,6 +18,17 @@ export default class RMQBroker implements IBroker {
         RMQBroker.CONN = connectedCon;
         RMQBroker.CONN.createChannel().then((ch: Channel) => {
           RMQBroker.CHAN = ch;
+          res();
+        });
+      });
+    });
+  }
+
+  public initFunctions(rmqConfig: any): Promise<any> {
+    return new Promise<any>((res, rej) => {
+      const FuncReg: FunctionRegistry = new FunctionRegistry();
+      FuncReg.initResponder(RMQBroker.CHAN, rmqConfig).then(() => {
+        FuncReg.initConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
           res();
         });
       });
