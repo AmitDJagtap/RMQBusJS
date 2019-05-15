@@ -8,8 +8,8 @@ import * as appRoot from 'app-root-path';
 
 export default class FunctionRegistry {
   private static CONN: Connection;
-  private respondersDir: string = appRoot.path + '/responders/*.js';
-  private consumersDir: string = appRoot.path + '/consumers/*.js';
+  private respondersDir: string = appRoot.path + '/dist/responders/*.js';
+  private consumersDir: string = appRoot.path + '/dist/consumers/*.js';
 
   public init(rmqConfig: any): Promise<any> {
     return new Promise<any>(res => {
