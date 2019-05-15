@@ -4,12 +4,12 @@ import { IConsumer as Consumer } from './Consumer';
 import { IResponder as Responder } from './Responder';
 import * as amqp from 'amqplib';
 import { Connection, Channel } from 'amqplib';
-const appRoot = require('app-root-path');
+import * as  appRoot from 'app-root-path';
 
 export default class FunctionRegistry {
   private static CONN: Connection;
-  private respondersDir: string = path.join(appRoot) + '/responders/*.js';
-  private consumersDir: string = path.join(appRoot) + '/consumers/*.js';
+  private respondersDir: string = path.join(appRoot.path) + '/responders/*.js';
+  private consumersDir: string = path.join(appRoot.path) + '/consumers/*.js';
 
   public init(rmqConfig: any): Promise<any> {
     return new Promise<any>(res => {
