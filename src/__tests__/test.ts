@@ -27,7 +27,6 @@ test('Instantion', () => {
 // });
 
 test('Test Path fo InitFunction', () => {
-
   var funcreg = new FunctionRegistry();
   var data;
   data = funcreg.getFunctionPaths();

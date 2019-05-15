@@ -100,7 +100,7 @@ export default class FunctionRegistry {
     });
   }
 
-  public getFunctionPaths(){
-    return { responder : this.respondersDir, consumer : this.consumersDir };
+  public getFunctionPaths() {
+    return { responder: this.respondersDir, consumer: this.consumersDir };
   }
 }
