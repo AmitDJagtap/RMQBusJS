@@ -1,6 +1,6 @@
 {
     "name": "rmqbusjs",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "A package to make rpc calls and publish async events via rabbitmq ",
     "main": "lib/index.js",
     "types": "lib/index.d.ts",
