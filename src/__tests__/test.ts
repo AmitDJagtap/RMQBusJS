@@ -1,4 +1,5 @@
 import RMQBroker from '../index';
+import FunctionRegistry from '../FunctionRegistory';
 
 test('Instantion', () => {
   expect(new RMQBroker()).toBeInstanceOf(RMQBroker);
@@ -24,3 +25,12 @@ test('Instantion', () => {
 //       expect(true).toBe(true);
 //   });
 // });
+
+test('Test Path fo InitFunction', () => {
+
+  var funcreg = new FunctionRegistry();
+  var data;
+  data = funcreg.getFunctionPaths();
+  console.log(data);
+  expect(data.responder).toBeDefined();
+});
