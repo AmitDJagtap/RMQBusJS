@@ -4,7 +4,7 @@ import { IConsumer as Consumer } from './Consumer';
 import { IResponder as Responder } from './Responder';
 import * as amqp from 'amqplib';
 import { Connection, Channel } from 'amqplib';
-import * as  appRoot from 'app-root-path';
+import * as appRoot from 'app-root-path';
 
 export default class FunctionRegistry {
   private static CONN: Connection;
