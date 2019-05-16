@@ -77,7 +77,7 @@ export default class RMQBroker implements IBroker {
           // return if no respose received from topic in 15 sec's
           setTimeout(() => {
             res(false);
-          }, 60000);
+          }, 120000);
         })
         .catch(err => {
           throw err;
