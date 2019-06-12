@@ -10,6 +10,7 @@ export default class FunctionRegistry {
   private static CONN: Connection;
   private respondersDir: string = appRoot.path + '/dist/responders/*.js';
   private consumersDir: string = appRoot.path + '/dist/consumers/*.js';
+  private globalConsumersDir: string = appRoot.path + '/dist/globalconsumers/*.js';
 
   public init(rmqConfig: any): Promise<any> {
     return new Promise<any>(res => {
@@ -80,6 +81,46 @@ export default class FunctionRegistry {
             durable: true,
           }).then((q: any) => {
             ch.bindQueue(q.queue, config.app, temp.eventTopic);
+            ch.consume(
+              q.queue,
+              function reply(msg: any) {
+                const incomingData = JSON.parse(msg.content.toString());
+                temp.handleEvent(incomingData).then(() => {
+                  console.log('Consumed');
+                });
+              },
+              {
+                noAck: true,
+              },
+            );
+          });
+          console.log(' [x] Consumer registered for event : ' + temp.eventTopic);
+        });
+        res();
+      });
+    });
+  }
+
+  public initGlobalConsumer(ch: Channel, config: any): Promise<any> {
+    return new Promise<any>(res => {
+      let instance: any;
+      let appName = "ayopop";
+
+      glob(this.globalConsumersDir, (er, files) => {
+        files.forEach(file => {
+          const stringArray: string[] = file.split('/');
+          let className: string = stringArray[stringArray.length - 1];
+          className = className.replace('.js', '');
+          instance = require(file)[className];
+          const temp: Consumer = new instance();
+
+          const ListenTopicName = appName + '.' + temp.eventTopic;
+          ch.assertExchange(appName, 'direct');
+          ch.assertQueue(ListenTopicName, {
+            exclusive: false,
+            durable: true,
+          }).then((q: any) => {
+            ch.bindQueue(q.queue, appName, temp.eventTopic);
             ch.consume(
               q.queue,
               function reply(msg: any) {

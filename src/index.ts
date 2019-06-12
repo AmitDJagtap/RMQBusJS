@@ -29,7 +29,9 @@ export default class RMQBroker implements IBroker {
       const FuncReg: FunctionRegistry = new FunctionRegistry();
       FuncReg.initResponder(RMQBroker.CHAN, rmqConfig).then(() => {
         FuncReg.initConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
-          res();
+          FuncReg.initGlobalConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
+            res();
+          });
         });
       });
     });
