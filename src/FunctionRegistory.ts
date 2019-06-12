@@ -104,7 +104,7 @@ export default class FunctionRegistry {
   public initGlobalConsumer(ch: Channel, config: any): Promise<any> {
     return new Promise<any>(res => {
       let instance: any;
-      const appName = "ayopop";
+      const appName = 'ayopop';
 
       glob(this.globalConsumersDir, (er, files) => {
         files.forEach(file => {
