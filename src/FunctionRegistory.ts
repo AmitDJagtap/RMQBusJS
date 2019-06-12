@@ -94,7 +94,7 @@ export default class FunctionRegistry {
               },
             );
           });
-          console.log(' [x] Consumer registered for event : ' + temp.eventTopic);
+          console.log(' [x] Consumer registered for event : ' + ListenTopicName);
         });
         res();
       });
@@ -115,10 +115,10 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = appName + '.' + temp.eventTopic;
-          ch.assertExchange(appName, 'direct');
+          ch.assertExchange(appName, 'direct', { durable: false });
           ch.assertQueue(ListenTopicName, {
             exclusive: false,
-            durable: true,
+            durable: false,
           }).then((q: any) => {
             ch.bindQueue(q.queue, appName, temp.eventTopic);
             ch.consume(
@@ -134,7 +134,7 @@ export default class FunctionRegistry {
               },
             );
           });
-          console.log(' [x] Consumer registered for event : ' + temp.eventTopic);
+          console.log(' [x] Global Consumer registered for event : ' + ListenTopicName);
         });
         res();
       });
