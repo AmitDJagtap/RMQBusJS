@@ -54,6 +54,9 @@ export default class FunctionRegistry {
               });
 
               ch.ack(msg);
+            }).catch((err) => {
+              console.log(err);
+              ch.nack(msg);
             });
           });
           console.log(' [x] Responders registered for event : ' + ListenTopicName);
@@ -87,11 +90,12 @@ export default class FunctionRegistry {
                 const incomingData = JSON.parse(msg.content.toString());
                 temp.handleEvent(incomingData).then(() => {
                   console.log('Consumed');
+                  ch.ack(incomingData);
+                }).catch((err) => {
+                  console.log(err);
+                  ch.nack(incomingData);
                 });
-              },
-              {
-                noAck: true,
-              },
+              }
             );
           });
           console.log(' [x] Consumer registered for event : ' + ListenTopicName);
@@ -104,7 +108,7 @@ export default class FunctionRegistry {
   public initGlobalConsumer(ch: Channel, config: any): Promise<any> {
     return new Promise<any>(res => {
       let instance: any;
-      const appName = 'ayopop';
+      const appName = config.app;
 
       glob(this.globalConsumersDir, (er, files) => {
         files.forEach(file => {
@@ -115,7 +119,7 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = appName + '.' + temp.eventTopic;
-          ch.assertExchange(appName, 'direct', { durable: false });
+          ch.assertExchange("ayopop", 'direct', { durable: false });
           ch.assertQueue(ListenTopicName, {
             exclusive: false,
             durable: false,
@@ -127,11 +131,12 @@ export default class FunctionRegistry {
                 const incomingData = JSON.parse(msg.content.toString());
                 temp.handleEvent(incomingData).then(() => {
                   console.log('Consumed');
+                  ch.ack(incomingData);
+                }).catch((err) => {
+                  console.log(err);
+                  ch.nack(incomingData);
                 });
-              },
-              {
-                noAck: true,
-              },
+              }
             );
           });
           console.log(' [x] Global Consumer registered for event : ' + ListenTopicName);
