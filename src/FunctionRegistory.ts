@@ -48,16 +48,19 @@ export default class FunctionRegistry {
 
           ch.consume(ListenTopicName, function reply(msg: any) {
             const incomingData = JSON.parse(msg.content.toString());
-            temp.executeWithResult(incomingData).then(response => {
-              ch.sendToQueue(msg.properties.replyTo, new Buffer(response.toString()), {
-                correlationId: msg.properties.correlationId,
-              });
+            temp
+              .executeWithResult(incomingData)
+              .then(response => {
+                ch.sendToQueue(msg.properties.replyTo, new Buffer(response.toString()), {
+                  correlationId: msg.properties.correlationId,
+                });
 
-              ch.ack(msg);
-            }).catch((err) => {
-              console.log(err);
-              ch.nack(msg);
-            });
+                ch.ack(msg);
+              })
+              .catch(err => {
+                console.log(err);
+                ch.nack(msg);
+              });
           });
           console.log(' [x] Responders registered for event : ' + ListenTopicName);
         });
@@ -84,19 +87,19 @@ export default class FunctionRegistry {
             durable: true,
           }).then((q: any) => {
             ch.bindQueue(q.queue, config.app, temp.eventTopic);
-            ch.consume(
-              q.queue,
-              function reply(msg: any) {
-                const incomingData = JSON.parse(msg.content.toString());
-                temp.handleEvent(incomingData).then(() => {
+            ch.consume(q.queue, function reply(msg: any) {
+              const incomingData = JSON.parse(msg.content.toString());
+              temp
+                .handleEvent(incomingData)
+                .then(() => {
                   console.log('Consumed');
                   ch.ack(incomingData);
-                }).catch((err) => {
+                })
+                .catch(err => {
                   console.log(err);
                   ch.nack(incomingData);
                 });
-              }
-            );
+            });
           });
           console.log(' [x] Consumer registered for event : ' + ListenTopicName);
         });
@@ -119,25 +122,25 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = appName + '.' + temp.eventTopic;
-          ch.assertExchange("ayopop", 'direct', { durable: false });
+          ch.assertExchange('ayopop', 'direct', { durable: false });
           ch.assertQueue(ListenTopicName, {
             exclusive: false,
             durable: false,
           }).then((q: any) => {
             ch.bindQueue(q.queue, appName, temp.eventTopic);
-            ch.consume(
-              q.queue,
-              function reply(msg: any) {
-                const incomingData = JSON.parse(msg.content.toString());
-                temp.handleEvent(incomingData).then(() => {
+            ch.consume(q.queue, function reply(msg: any) {
+              const incomingData = JSON.parse(msg.content.toString());
+              temp
+                .handleEvent(incomingData)
+                .then(() => {
                   console.log('Consumed');
                   ch.ack(incomingData);
-                }).catch((err) => {
+                })
+                .catch(err => {
                   console.log(err);
                   ch.nack(incomingData);
                 });
-              }
-            );
+            });
           });
           console.log(' [x] Global Consumer registered for event : ' + ListenTopicName);
         });
