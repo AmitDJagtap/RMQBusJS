@@ -93,6 +93,7 @@ export default class FunctionRegistry {
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
+                  //check for timeout here and error out
                   ch.ack(incomingData);
                 })
                 .catch(err => {
@@ -130,17 +131,19 @@ export default class FunctionRegistry {
             ch.bindQueue(q.queue, 'ayopop', temp.eventTopic);
             ch.consume(q.queue, function reply(msg: any) {
               const incomingData = JSON.parse(msg.content.toString());
+              const cmsg = msg;
               temp
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
-                  ch.ack(incomingData);
+                  //check for timeout here and error out
+                  ch.ack(cmsg);
                 })
                 .catch(err => {
                   console.log(err);
-                  ch.nack(incomingData);
+                  ch.nack(cmsg);
                 });
-            });
+            }, { noAck: false });
           });
           console.log(' [x] Global Consumer registered for event : ' + ListenTopicName);
         });
