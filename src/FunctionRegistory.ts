@@ -127,7 +127,7 @@ export default class FunctionRegistry {
             exclusive: false,
             durable: false,
           }).then((q: any) => {
-            ch.bindQueue(q.queue, appName, temp.eventTopic);
+            ch.bindQueue(q.queue, "ayopop", temp.eventTopic);
             ch.consume(q.queue, function reply(msg: any) {
               const incomingData = JSON.parse(msg.content.toString());
               temp
