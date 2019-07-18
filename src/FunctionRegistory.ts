@@ -89,18 +89,19 @@ export default class FunctionRegistry {
             ch.bindQueue(q.queue, config.app, temp.eventTopic);
             ch.consume(q.queue, function reply(msg: any) {
               const incomingData = JSON.parse(msg.content.toString());
+              const cmsg = msg;
               temp
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
                   // check for timeout here and error out
-                  ch.ack(incomingData);
+                  ch.ack(cmsg);
                 })
                 .catch(err => {
                   console.log(err);
-                  ch.nack(incomingData);
+                  ch.nack(cmsg);
                 });
-            });
+            }, { noAck: false });
           });
           console.log(' [x] Consumer registered for event : ' + ListenTopicName);
         });
@@ -146,7 +147,7 @@ export default class FunctionRegistry {
                     ch.nack(cmsg);
                   });
               },
-              { noAck: false },
+              { noAck: false }
             );
           });
           console.log(' [x] Global Consumer registered for event : ' + ListenTopicName);
