@@ -93,7 +93,7 @@ export default class FunctionRegistry {
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
-                  //check for timeout here and error out
+                  // check for timeout here and error out
                   ch.ack(incomingData);
                 })
                 .catch(err => {
@@ -136,7 +136,7 @@ export default class FunctionRegistry {
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
-                  //check for timeout here and error out
+                  // check for timeout here and error out
                   ch.ack(cmsg);
                 })
                 .catch(err => {
