@@ -93,7 +93,7 @@ export default class FunctionRegistry {
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
-                  ch.ack(incomingData);
+                  // ch.ack(incomingData);
                 })
                 .catch(err => {
                   console.log(err);
@@ -134,7 +134,7 @@ export default class FunctionRegistry {
                 .handleEvent(incomingData)
                 .then(() => {
                   console.log('Consumed');
-                  ch.ack(incomingData);
+                  // ch.ack(incomingData);
                 })
                 .catch(err => {
                   console.log(err);
