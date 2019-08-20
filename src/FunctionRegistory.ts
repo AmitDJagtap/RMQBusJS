@@ -118,6 +118,7 @@ export default class FunctionRegistry {
     return new Promise<any>(res => {
       let instance: any;
       const appName = config.app;
+      const globalExchangeName = config.globalExchangeName || "myapp";
 
       glob(this.globalConsumersDir, (er, files) => {
         files.forEach(file => {
@@ -128,12 +129,12 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = appName + '.' + temp.eventTopic;
-          ch.assertExchange('ayopop', 'direct', { durable: false });
+          ch.assertExchange(globalExchangeName, 'direct', { durable: false });
           ch.assertQueue(ListenTopicName, {
             exclusive: false,
             durable: false,
           }).then((q: any) => {
-            ch.bindQueue(q.queue, 'ayopop', temp.eventTopic);
+            ch.bindQueue(q.queue, globalExchangeName, temp.eventTopic);
             ch.consume(
               q.queue,
               function reply(msg: any) {
