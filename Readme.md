@@ -21,10 +21,11 @@ The `rabbitmqConf` parameter required by init() function is a JSON object which 
 ```
 "rabbitmq": {
      "url": "amqp://user:passwd@localhost:5672",
-     "app": "apigateway"
+     "app": "apigateway",
+     "globalExchangeName" : "myapp"
 }
 ```
-The `url` property is the url of your rabbitmq server ( not the managment url) and the `app` property provides a uniqe name to your service which is later used to identify the service and create queue names accordingly.
+The `url` property is the url of your rabbitmq server ( not the managment url) and the `app` property provides a uniqe name to your service which is later used to identify the service and create queue names accordingly. The `globalExchangeName` is used to create a global exchange which is responsible for broadcasting messages to queues in case if you register a global conusmer.
 
 Note - The RMQBuJs in this case is only required to provide functions to perfrom RPC calls or publish calls . And thus in your controller code you can use it like this .
 
