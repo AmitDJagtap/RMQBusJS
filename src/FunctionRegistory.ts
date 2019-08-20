@@ -120,8 +120,8 @@ export default class FunctionRegistry {
       const appName = config.app;
       const globalExchangeName = config.globalExchangeName;
 
-      if (!globalExchangeName || globalExchangeName.trim() === "") {
-        throw new Error("globalExchangeName property is missing but is required for RMQBusJS.");
+      if (!globalExchangeName || globalExchangeName.trim() === '') {
+        throw new Error('globalExchangeName property is missing but is required for RMQBusJS.');
       }
 
       glob(this.globalConsumersDir, (er, files) => {
