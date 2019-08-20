@@ -118,7 +118,7 @@ export default class FunctionRegistry {
     return new Promise<any>(res => {
       let instance: any;
       const appName = config.app;
-      const globalExchangeName = config.globalExchangeName || "myapp";
+      const globalExchangeName = config.globalExchangeName || 'myapp';
 
       glob(this.globalConsumersDir, (er, files) => {
         files.forEach(file => {
