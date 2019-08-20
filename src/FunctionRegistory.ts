@@ -118,7 +118,11 @@ export default class FunctionRegistry {
     return new Promise<any>(res => {
       let instance: any;
       const appName = config.app;
-      const globalExchangeName = config.globalExchangeName || 'myapp';
+      const globalExchangeName = config.globalExchangeName;
+
+      if (!globalExchangeName || globalExchangeName.trim() === "") {
+        throw new Error("globalExchangeName property is missing but is required for RMQBusJS.");
+      }
 
       glob(this.globalConsumersDir, (er, files) => {
         files.forEach(file => {
