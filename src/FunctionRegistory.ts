@@ -5,6 +5,7 @@ import { IResponder as Responder } from './Responder';
 import * as amqp from 'amqplib';
 import { Connection, Channel } from 'amqplib';
 import * as appRoot from 'app-root-path';
+import { DefaultOptions } from './DefaultOptions';
 
 export default class FunctionRegistry {
   private static CONN: Connection;
@@ -12,9 +13,9 @@ export default class FunctionRegistry {
   private consumersDir: string = appRoot.path + '/dist/consumers/*.js';
   private globalConsumersDir: string = appRoot.path + '/dist/globalconsumers/*.js';
 
-  public init(rmqConfig: any): Promise<any> {
+  public init(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>(res => {
-      amqp.connect(rmqConfig.url).then((connectedCon: Connection) => {
+      amqp.connect(rmqConfig.URL).then((connectedCon: Connection) => {
         FunctionRegistry.CONN = connectedCon;
         FunctionRegistry.CONN.createChannel().then((ch: Channel) => {
           this.initResponder(ch, rmqConfig).then(() => {
@@ -27,7 +28,7 @@ export default class FunctionRegistry {
     });
   }
 
-  public initResponder(ch: Channel, config: any): Promise<any> {
+  public initResponder(ch: Channel, config: DefaultOptions): Promise<any> {
     return new Promise<any>(res => {
       let instance: any;
       glob(this.respondersDir, (er, files) => {
@@ -40,7 +41,7 @@ export default class FunctionRegistry {
           instance = require(file)[className];
           const temp: Responder = new instance();
 
-          const ListenTopicName = config.app + '.' + temp.handleTopic;
+          const ListenTopicName = config.APP_NAME + '.' + temp.handleTopic;
           ch.assertQueue(ListenTopicName, {
             durable: false,
           });
@@ -69,7 +70,7 @@ export default class FunctionRegistry {
     });
   }
 
-  public initConsumer(ch: Channel, config: any): Promise<any> {
+  public initConsumer(ch: Channel, config: DefaultOptions): Promise<any> {
     return new Promise<any>(res => {
       let instance: any;
       glob(this.consumersDir, (er, files) => {
@@ -80,13 +81,13 @@ export default class FunctionRegistry {
           instance = require(file)[className];
           const temp: Consumer = new instance();
 
-          const ListenTopicName = config.app + '.' + temp.eventTopic;
-          ch.assertExchange(config.app, 'direct');
+          const ListenTopicName = config.APP_NAME + '.' + temp.eventTopic;
+          ch.assertExchange(config.APP_NAME, 'direct');
           ch.assertQueue(ListenTopicName, {
             exclusive: false,
             durable: true,
           }).then((q: any) => {
-            ch.bindQueue(q.queue, config.app, temp.eventTopic);
+            ch.bindQueue(q.queue, config.APP_NAME, temp.eventTopic);
             ch.consume(
               q.queue,
               function reply(msg: any) {
@@ -114,11 +115,11 @@ export default class FunctionRegistry {
     });
   }
 
-  public initGlobalConsumer(ch: Channel, config: any): Promise<any> {
+  public initGlobalConsumer(ch: Channel, config: DefaultOptions): Promise<any> {
     return new Promise<any>(res => {
       let instance: any;
-      const appName = config.app;
-      const globalExchangeName = config.globalExchangeName;
+      const appName = config.APP_NAME;
+      const globalExchangeName = config.GLOBAL_EXCHANGE_NAME;
 
       if (!globalExchangeName || globalExchangeName.trim() === '') {
         throw new Error('globalExchangeName property is missing but is required for RMQBusJS.');
