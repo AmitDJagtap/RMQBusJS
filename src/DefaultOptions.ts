@@ -11,7 +11,7 @@ export class DefaultOptions {
     public CONSUMER_QUEUE_EXCLUSIVE: boolean = false;
     public CONSUMER_QUEUE_AUTODEL: boolean = false;
     public CONSUMER_EXCHANGE_AUTODEL: boolean = false;
-    public CONSUMER_EXCHANGE_DURAble: boolean = true;
+    public CONSUMER_EXCHANGE_DURABLE: boolean = true;
     public CONSUME_CALL_NOACK: boolean = false;
     public GLOBAL_EXCHANGE_NAME: string = "ayopop"
     public URL: string;
