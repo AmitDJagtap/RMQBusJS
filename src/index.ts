@@ -9,7 +9,6 @@ export default class RMQBroker implements IBroker {
   private static CONN: Connection;
   private static CHAN: Channel;
   private static FUNCTIONS_FIR = __dirname + '/api/services/*.js';
-  
 
   public init(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>((res, rej) => {
@@ -44,7 +43,7 @@ export default class RMQBroker implements IBroker {
     const exchange = tempsplit[0];
     const ok = RMQBroker.CHAN.publish(exchange, routingKey, buff, {
       persistent: persistMessage,
-      expiration: expireMessageIn
+      expiration: expireMessageIn,
     });
     console.log('[x] Event Published : ' + topic);
     return ok;
@@ -54,7 +53,7 @@ export default class RMQBroker implements IBroker {
     throw new Error('Method not implemented.');
   }
 
-  public rpc(topic: string, message: any,  persistMessage?: boolean, expireMessageIn?: string): Promise<any> {
+  public rpc(topic: string, message: any, persistMessage?: boolean, expireMessageIn?: string): Promise<any> {
     return new Promise<any>((res, rej) => {
       console.log('[x] RPC Invoked : ' + topic);
       const buf = Buffer.from(JSON.stringify(message));
@@ -79,7 +78,7 @@ export default class RMQBroker implements IBroker {
             correlationId: corr,
             replyTo: q.queue,
             persistent: persistMessage,
-            expiration: expireMessageIn
+            expiration: expireMessageIn,
           });
           // return if no respose received from topic in 15 sec's
           setTimeout(() => {
