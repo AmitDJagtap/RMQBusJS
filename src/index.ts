@@ -5,10 +5,11 @@ import FunctionRegistry from './FunctionRegistory';
 import { DefaultOptions } from './DefaultOptions';
 
 export default class RMQBroker implements IBroker {
+  public static rmqOptions: DefaultOptions;
   private static CONN: Connection;
   private static CHAN: Channel;
   private static FUNCTIONS_FIR = __dirname + '/api/services/*.js';
-  static rmqOptions: DefaultOptions;
+  
 
   public init(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>((res, rej) => {
@@ -36,14 +37,14 @@ export default class RMQBroker implements IBroker {
     });
   }
 
-  public publish(topic: string, message: any, persistent?: boolean, expiration?: string): any {
+  public publish(topic: string, message: any, persistMessage?: boolean, expireMessageIn?: string): any {
     const buff = Buffer.from(JSON.stringify(message));
     const tempsplit = topic.split('.');
     const routingKey = tempsplit[1];
     const exchange = tempsplit[0];
     const ok = RMQBroker.CHAN.publish(exchange, routingKey, buff, {
-      persistent: persistent,
-      expiration: expiration
+      persistent: persistMessage,
+      expiration: expireMessageIn
     });
     console.log('[x] Event Published : ' + topic);
     return ok;
