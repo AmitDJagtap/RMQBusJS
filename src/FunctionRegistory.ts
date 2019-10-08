@@ -45,7 +45,7 @@ export default class FunctionRegistry {
           ch.assertQueue(ListenTopicName, {
             durable: config.RESPONDER_QUEUE_DURABLE,
             autoDelete: config.RESPONDER_QUEUE_AUTODEL,
-            exclusive: config.RESPONDER_QUEUE_EXCLUSIVE
+            exclusive: config.RESPONDER_QUEUE_EXCLUSIVE,
           });
           ch.prefetch(1);
 
@@ -86,12 +86,12 @@ export default class FunctionRegistry {
           const ListenTopicName = config.APP_NAME + '.' + temp.eventTopic;
           ch.assertExchange(config.APP_NAME, 'direct', {
             durable: config.CONSUMER_EXCHANGE_DURABLE,
-            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL
+            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL,
           });
           ch.assertQueue(ListenTopicName, {
             durable: config.CONSUMER_QUEUE_DURABLE,
             autoDelete: config.CONSUMER_QUEUE_AUTODEL,
-            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE
+            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE,
           }).then((q: any) => {
             ch.bindQueue(q.queue, config.APP_NAME, temp.eventTopic);
             ch.consume(
@@ -142,12 +142,12 @@ export default class FunctionRegistry {
           const ListenTopicName = appName + '.' + temp.eventTopic;
           ch.assertExchange(globalExchangeName, 'direct', {
             durable: config.CONSUMER_EXCHANGE_DURABLE,
-            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL
+            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL,
           });
           ch.assertQueue(ListenTopicName, {
             durable: config.CONSUMER_QUEUE_DURABLE,
             autoDelete: config.CONSUMER_QUEUE_AUTODEL,
-            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE
+            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE,
           }).then((q: any) => {
             ch.bindQueue(q.queue, globalExchangeName, temp.eventTopic);
             ch.consume(
