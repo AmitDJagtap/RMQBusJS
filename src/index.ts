@@ -96,11 +96,15 @@ export default class RMQBroker implements IBroker {
   }
 
   public onConnectionClose(handleCloseEvent: any) {
-    RMQBroker.CHAN.on('close', handleCloseEvent);
+    RMQBroker.CHAN.on('close', function () {
+      handleCloseEvent();
+    });
   }
 
   public onConnectionError(handleErrorEvent: any) {
-    RMQBroker.CHAN.on('error', handleErrorEvent);
+    RMQBroker.CHAN.on('error', function (err:any) {
+      handleErrorEvent(err);
+    });
   }
 }
 
