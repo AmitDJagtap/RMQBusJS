@@ -43,7 +43,9 @@ export default class FunctionRegistry {
 
           const ListenTopicName = config.APP_NAME + '.' + temp.handleTopic;
           ch.assertQueue(ListenTopicName, {
-            durable: false,
+            durable: config.RESPONDER_QUEUE_DURABLE,
+            autoDelete: config.RESPONDER_QUEUE_AUTODEL,
+            exclusive: config.RESPONDER_QUEUE_EXCLUSIVE
           });
           ch.prefetch(1);
 
@@ -82,10 +84,14 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = config.APP_NAME + '.' + temp.eventTopic;
-          ch.assertExchange(config.APP_NAME, 'direct');
+          ch.assertExchange(config.APP_NAME, 'direct', {
+            durable: config.CONSUMER_EXCHANGE_DURABLE,
+            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL
+          });
           ch.assertQueue(ListenTopicName, {
-            exclusive: false,
-            durable: true,
+            durable: config.CONSUMER_QUEUE_DURABLE,
+            autoDelete: config.CONSUMER_QUEUE_AUTODEL,
+            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE
           }).then((q: any) => {
             ch.bindQueue(q.queue, config.APP_NAME, temp.eventTopic);
             ch.consume(
@@ -134,10 +140,14 @@ export default class FunctionRegistry {
           const temp: Consumer = new instance();
 
           const ListenTopicName = appName + '.' + temp.eventTopic;
-          ch.assertExchange(globalExchangeName, 'direct', { durable: false });
+          ch.assertExchange(globalExchangeName, 'direct', {
+            durable: config.CONSUMER_EXCHANGE_DURABLE,
+            autoDelete: config.CONSUMER_EXCHANGE_AUTODEL
+          });
           ch.assertQueue(ListenTopicName, {
-            exclusive: false,
-            durable: false,
+            durable: config.CONSUMER_QUEUE_DURABLE,
+            autoDelete: config.CONSUMER_QUEUE_AUTODEL,
+            exclusive: config.CONSUMER_QUEUE_EXCLUSIVE
           }).then((q: any) => {
             ch.bindQueue(q.queue, globalExchangeName, temp.eventTopic);
             ch.consume(
