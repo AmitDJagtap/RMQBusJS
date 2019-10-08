@@ -94,6 +94,14 @@ export default class RMQBroker implements IBroker {
   public unsubscribe(topic: string): void {
     throw new Error('Method not implemented.');
   }
+
+  public onConnectionClose(handleCloseEvent: any) {
+    RMQBroker.CHAN.on("close", handleCloseEvent)
+  }
+
+  public onConnectionError(handleErrorEvent: any) {
+    RMQBroker.CHAN.on("error", handleErrorEvent)
+  }
 }
 
 // temp for public code.

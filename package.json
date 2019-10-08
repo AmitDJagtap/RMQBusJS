@@ -21,7 +21,7 @@
     ],
     "author": "damitj07",
     "license": "ISC",
-    "repository": "bamblehorse/tiny",
+    "repository": "damitj/rmqbusjs",
     "devDependencies": {
         "@types/app-root-path": "^1.2.4",
         "@types/glob": "^7.1.1",
