@@ -8,7 +8,6 @@ export default class RMQBroker implements IBroker {
   public static rmqOptions: DefaultOptions;
   private static CONN: Connection;
   private static CHAN: Channel;
-  private static FUNCTIONS_FIR = __dirname + '/api/services/*.js';
 
   public init(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>((res, rej) => {
@@ -19,6 +18,9 @@ export default class RMQBroker implements IBroker {
           RMQBroker.CHAN = ch;
           res();
         });
+      }).catch((err) => {
+        console.log(err);
+        rej(err)
       });
     });
   }
@@ -32,6 +34,9 @@ export default class RMQBroker implements IBroker {
             res();
           });
         });
+      }).catch((err) => {
+        console.log(err);
+        rej(err)
       });
     });
   }
@@ -85,8 +90,9 @@ export default class RMQBroker implements IBroker {
             res(false);
           }, RMQBroker.rmqOptions.RPC_TIMEOUT);
         })
-        .catch(err => {
-          throw err;
+        .catch((err) => {
+          console.log(err);
+          rej(err)
         });
     });
   }
@@ -96,13 +102,13 @@ export default class RMQBroker implements IBroker {
   }
 
   public onConnectionClose(handleCloseEvent: any) {
-    RMQBroker.CHAN.on('close', () => {
+    RMQBroker.CONN.on('close', () => {
       handleCloseEvent();
     });
   }
 
   public onConnectionError(handleErrorEvent: any) {
-    RMQBroker.CHAN.on('error', (err: any) => {
+    RMQBroker.CONN.on('error', (err: any) => {
       handleErrorEvent(err);
     });
   }
