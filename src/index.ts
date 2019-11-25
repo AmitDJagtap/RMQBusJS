@@ -12,32 +12,37 @@ export default class RMQBroker implements IBroker {
   public init(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>((res, rej) => {
       RMQBroker.rmqOptions = rmqConfig;
-      amqp.connect(rmqConfig.URL).then((connectedCon: Connection) => {
-        RMQBroker.CONN = connectedCon;
-        RMQBroker.CONN.createChannel().then((ch: Channel) => {
-          RMQBroker.CHAN = ch;
-          res();
+      amqp
+        .connect(rmqConfig.URL)
+        .then((connectedCon: Connection) => {
+          RMQBroker.CONN = connectedCon;
+          RMQBroker.CONN.createChannel().then((ch: Channel) => {
+            RMQBroker.CHAN = ch;
+            res();
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          rej(err);
         });
-      }).catch((err) => {
-        console.log(err);
-        rej(err)
-      });
     });
   }
 
   public initFunctions(rmqConfig: DefaultOptions): Promise<any> {
     return new Promise<any>((res, rej) => {
       const FuncReg: FunctionRegistry = new FunctionRegistry();
-      FuncReg.initResponder(RMQBroker.CHAN, rmqConfig).then(() => {
-        FuncReg.initConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
-          FuncReg.initGlobalConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
-            res();
+      FuncReg.initResponder(RMQBroker.CHAN, rmqConfig)
+        .then(() => {
+          FuncReg.initConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
+            FuncReg.initGlobalConsumer(RMQBroker.CHAN, rmqConfig).then(() => {
+              res();
+            });
           });
+        })
+        .catch(err => {
+          console.log(err);
+          rej(err);
         });
-      }).catch((err) => {
-        console.log(err);
-        rej(err)
-      });
     });
   }
 
@@ -90,9 +95,9 @@ export default class RMQBroker implements IBroker {
             res(false);
           }, RMQBroker.rmqOptions.RPC_TIMEOUT);
         })
-        .catch((err) => {
+        .catch(err => {
           console.log(err);
-          rej(err)
+          rej(err);
         });
     });
   }
