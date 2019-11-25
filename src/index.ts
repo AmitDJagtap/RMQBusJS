@@ -3,7 +3,7 @@ import * as amqp from 'amqplib';
 import { Connection, Channel, Replies, Options } from 'amqplib';
 import FunctionRegistry from './FunctionRegistory';
 import { DefaultOptions } from './DefaultOptions';
-var timeouts: any;
+let timeouts: any;
 
 export default class RMQBroker implements IBroker {
   public static rmqOptions: DefaultOptions;
