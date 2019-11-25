@@ -93,7 +93,7 @@ export default class RMQBroker implements IBroker {
             expiration: expireMessageIn,
           });
           // return if no respose received from topic in 15 sec's
-          timeouts = setTimeout(function () {
+          timeouts = setTimeout(() => {
             RMQBroker.CHAN.deleteQueue(q.queue)
             res(false)
           }, RMQBroker.rmqOptions.RPC_TIMEOUT);
