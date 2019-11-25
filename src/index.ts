@@ -78,7 +78,7 @@ export default class RMQBroker implements IBroker {
               if (msg && msg.properties.correlationId === corr) {
                 const consumerTag = msg.fields.consumerTag;
                 console.log('[x] Response Received for : ' + q.queue);
-                clearTimeout(timeouts)
+                clearTimeout(timeouts);
                 res(msg.content);
                 RMQBroker.CHAN.cancel(consumerTag);
               }
@@ -94,8 +94,8 @@ export default class RMQBroker implements IBroker {
           });
           // return if no respose received from topic in 15 sec's
           timeouts = setTimeout(() => {
-            RMQBroker.CHAN.deleteQueue(q.queue)
-            res(false)
+            RMQBroker.CHAN.deleteQueue(q.queue);
+            res(false);
           }, RMQBroker.rmqOptions.RPC_TIMEOUT);
         })
         .catch(err => {
