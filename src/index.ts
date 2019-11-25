@@ -3,6 +3,7 @@ import * as amqp from 'amqplib';
 import { Connection, Channel, Replies, Options } from 'amqplib';
 import FunctionRegistry from './FunctionRegistory';
 import { DefaultOptions } from './DefaultOptions';
+var timeouts: any;
 
 export default class RMQBroker implements IBroker {
   public static rmqOptions: DefaultOptions;
@@ -77,6 +78,7 @@ export default class RMQBroker implements IBroker {
               if (msg && msg.properties.correlationId === corr) {
                 const consumerTag = msg.fields.consumerTag;
                 console.log('[x] Response Received for : ' + q.queue);
+                clearTimeout(timeouts)
                 res(msg.content);
                 RMQBroker.CHAN.cancel(consumerTag);
               }
@@ -91,8 +93,9 @@ export default class RMQBroker implements IBroker {
             expiration: expireMessageIn,
           });
           // return if no respose received from topic in 15 sec's
-          setTimeout(() => {
-            res(false);
+          timeouts = setTimeout(function () {
+            RMQBroker.CHAN.deleteQueue(q.queue)
+            res(false)
           }, RMQBroker.rmqOptions.RPC_TIMEOUT);
         })
         .catch(err => {
